@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      <span class="titulo-app">TechConf 2026</span>
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,12 +9,59 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title size="large">TechConf 2026</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ion-list-header>
+    <ion-label>
+      <div class="saudacao">{{ saudacao }}</div>
+      <div class="evento-nome">TechConf 2026</div>
+      <div class="data-horario">{{ dataCompleta }} • Centro de Convenções</div>
+    </ion-label>
+  </ion-list-header>
+
+  <ion-list>
+    <ion-item *ngFor="let palestra of palestras" (click)="abrirConfirmacao(palestra)">
+      <ion-card class="palestra-card" [class.inscrito]="verificarInscrito(palestra.id)">
+        
+        <ion-badge *ngIf="verificarInscrito(palestra.id)" class="inscrito-badge" color="success">
+          <ion-icon name="checkmark-circle-outline" size="small"></ion-icon>
+          Inscrito
+        </ion-badge>
+        
+        <ion-card-header>
+          <div class="card-header-content">
+            <div class="icone-container">
+              <ion-icon [name]="palestra.icone" size="large"></ion-icon>
+            </div>
+            <div class="textos-header">
+              <ion-card-title>{{ palestra.titulo }}</ion-card-title>
+              <ion-card-subtitle>
+                <div class="info-palestrante">
+                  <ion-icon name="person-outline" size="small"></ion-icon>
+                  {{ palestra.palestrante }}
+                </div>
+              </ion-card-subtitle>
+            </div>
+          </div>
+        </ion-card-header>
+
+        <ion-card-content>
+          <div class="info-horario">
+            <ion-icon name="time-outline" size="small"></ion-icon>
+            <span>{{ palestra.horario }}</span>
+          </div>
+          <div class="info-descricao">
+            {{ palestra.descricao }}
+          </div>
+          <div class="botao-inscricao">
+            <span class="texto-inscricao" [class.inscrito]="verificarInscrito(palestra.id)">
+              {{ verificarInscrito(palestra.id) ? 'Cancelar inscrição →' : 'Clique para se inscrever →' }}
+            </span>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </ion-item>
+  </ion-list>
 </ion-content>
